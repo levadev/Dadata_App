@@ -59,9 +59,9 @@ def change(what:str, key, value):
     clean_console()
     
     try:
-        sure = show_menu(sure_menu(f'Вы уверены, что хотите изменить {what}?'))
+        sure = show_menu(sure_menu(f'Вы уверены, что хотите изменить {what}?'), True)
 
-        if sure == True:
+        if sure:
             database.update_settings(database.connect, {key: value})
             clean_console()
             print('Настройки настроены! :)')
