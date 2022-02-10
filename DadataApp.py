@@ -10,19 +10,30 @@ import service
 
 def clean_console():
     os.system('cls')
-    print('                         DaData Suggest App')
+    print('\t\t\t\t\t\t\t\t\t\tDaData Suggest App')
 
 
-#The function remove database and __pycache__ file from the directory, if files is not in directory then returns None
 def remove_temporary_files():
+    """
+    :return: None
+    :todo: remove __pycache__ file from the directory, if files is not in directory then returns None
+    """
+    
     try:
         shutil.rmtree('./__pycache__')
-    except:
+    except Exception as e: 
+        print(f'Упс, что-то не так :( --> {e}')
         return None
 
 
-#The function get a coordinates from the addres, if is exist then returns coordinates
 def get_coordinates(address):
+    """
+    :param address: address what you find
+    :type address: str
+    :return: string coordinates
+    :todo: get a coordinates from the addres, if is exist then returns coordinates
+    """
+    
     settings = database.get_settings(database.connect)
     response = service.make_response(settings, dict(query=address, language=settings['lang']))
     response = response[0]['data']
@@ -36,7 +47,13 @@ def get_coordinates(address):
 
 #The function makes (returns) a menu that specifies the action for the user
 def sure_menu(text):
-
+    """
+    :param text: text to be displayed
+    :type text: str
+    :return: dictionary menu that specifies the action for the user
+    :todo: makes a menu that specifies the action for the user
+    """
+    
     return {
         'name' : text,
         'items' : [
@@ -46,11 +63,16 @@ def sure_menu(text):
     }
 
 
-#The function change a settings
-# what - some text: What are you change?
-# key - key of settings in database
-# value - new value
-def change(what:str, key, value):
+def change(what, key, value):
+    """
+    :param what: What are you change?
+    :type what: str
+    :param key: key of settings in database
+    :type key: str
+    :param value: new value
+    :return: 0
+    :todo: change a settings
+    """
     
     clean_console()
     
@@ -68,8 +90,10 @@ def change(what:str, key, value):
         print(f'Упс, что-то не так :( --> {e}')
 
 
-#The function make a request to the address entered by the user and returns chosen coordinates
 def menu_request():
+    """
+    :todo: make a request to the address entered by the user and returns chosen coordinates
+    """
 
     clean_console()
     settings = database.get_settings(database.connect)
@@ -104,7 +128,7 @@ def menu_request():
 #<------------------ Data ------------------>
 #Settings menu
 SET = {
-    'name' : '                           Пользовательские настройки',
+    'name' : '\t\t\t\t\t\t\t\Пользовательские настройки',
     'items' : [
         ['изменить URL', lambda: change('URL', 'URL', input('Пожалуйста, введите URL: '))],
         ['изменить API', lambda: change('API', 'API', input('Пожалуйста, введите API: '))],
@@ -116,7 +140,7 @@ SET = {
 
 #Language menu
 LANGUAGE = {
-    'name' : '                           Меню выбора языка',
+    'name' : '\t\t\t\t\t\t\t\Меню выбора языка',
     'items' : [
         ['поменять язык на русский', lambda: change('язык', 'lang', 'ru')],
         ['поменять язык на английский', lambda: change('язык', 'lang', 'en')],
@@ -126,7 +150,7 @@ LANGUAGE = {
 
 #Start menu
 START = {
-      'name' : '                           Главное меню',
+      'name' : '\t\t\t\t\t\t\t\Главное меню',
       'items' : [
           ['узнать координаты по адресу', lambda: menu_request()],
           ['войти в меню настроек', lambda: show_menu(SET,True)],
@@ -139,6 +163,13 @@ START = {
 #<------------------ Application ------------------>
 #The function make the interface of the Application
 def show_menu(menu, turn):
+    """
+    :param menu: dictionary of menu
+    :type menu: dict
+    :param turn: bolean statment
+    :type turn: bolean
+    :todo: make the interface of the Application
+    """
     
     state = True
 
