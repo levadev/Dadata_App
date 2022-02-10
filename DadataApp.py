@@ -4,10 +4,6 @@ import shutil
 import database
 import service
 
-#Get actual settings from the database
-settings = database.get_settings(database.connect)
-
-
 
 #<------------------ Function ------------------>
 #Several main functions
@@ -27,7 +23,7 @@ def remove_temporary_files():
 
 #The function get a coordinates from the addres, if is exist then returns coordinates
 def get_coordinates(address):
-
+    settings = database.get_settings(database.connect)
     response = service.make_response(settings, dict(query=address, language=settings['lang']))
     response = response[0]['data']
 
@@ -76,10 +72,11 @@ def change(what:str, key, value):
 def menu_request():
 
     clean_console()
-
+    settings = database.get_settings(database.connect)
     if settings['API'] == '':
         print('Чтобы пользоваться этой функцией нужно ввести публичный API токен')
         change('API', 'API', input('Пожалуйста, введите API: '))
+        settings = database.get_settings(database.connect)
     
     address = input('Что вы хотите найти? --> ')
     response = service.make_response(settings, dict(query=address, language=settings['lang']))
