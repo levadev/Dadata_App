@@ -25,3 +25,7 @@ When you install [Python](https://www.python.org), download this ZIP, upacked in
 ```sh
 python DadataApp.py
 ```
+If you get an error like ModuleNotFoundError, please write this in console/PowerShell
+```sh
+pip install -r ./requirements.txt
+```
