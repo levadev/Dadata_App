@@ -8,6 +8,7 @@ Dadata Application is the python wrapper for DaData Suggest API.
 
 - Install Python 3.*
 - Run Dadata_App.py
+- Enter your API
 - Enter address you need
 - ✨See Magic ✨
 
