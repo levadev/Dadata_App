@@ -9,6 +9,10 @@ SETTINGS = {
 
 #The function connect to SQL Database
 def sql_connection():
+    """
+    :return: connection to Database
+    :todo: returns connection to Database
+    """
     connect = sqlite3.connect('settingsDaDataApp.db')
     cursor = connect.cursor()
 
@@ -29,18 +33,29 @@ def sql_connection():
 
 #The function requests settings from database and returns dictionari of current settings
 def get_settings(connect):
-  cursor = connect.cursor()
-  cursor.execute('SELECT * FROM settingsDaDataApp')
-  data = cursor.fetchone()
-  return         {
-            'id' : data[0],
-            'URL' : data[1],
-            'API' : data[2],
-            'lang' : data[3]
-        }
+    """
+    :param connect: connection to Database
+    :return: dictionary of settings
+    :todo: requests settings from database and returns dictionari of current settings
+    """
+    cursor = connect.cursor()
+    cursor.execute('SELECT * FROM settingsDaDataApp')
+    data = cursor.fetchone()
+    
+    return         {
+                    'id' : data[0],
+                    'URL' : data[1],
+                    'API' : data[2],
+                    'lang' : data[3]
+                }
 
-#The function updates current settings from Dadata.change() function
-def update_settings(connect, settings:dict):
+def update_settings(connect, settings):
+    """
+    :param connect: connection to Database
+    :param settings: dictionary of settings
+    :type settings: dict
+    :todo: updates current settings from Dadata.change() function
+    """
     cursor = connect.cursor()
     for key, value in settings.items():
         cursor.execute(f"UPDATE settingsDaDataApp SET '{key}' = ? WHERE id = ?", (value, 1))
